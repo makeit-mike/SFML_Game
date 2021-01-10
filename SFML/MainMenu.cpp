@@ -11,38 +11,44 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
     image.loadFromFile("images/MainMenu.png");
     texture.loadFromImage(image);
     sprite.setTexture(texture);
-
+    window.draw(sprite);
 
     sf::RectangleShape playBtn;
-    playBtn.setSize(sf::Vector2f(Game::SCREEN_WIDTH, 380));
-    playBtn.setOutlineColor(sf::Color::Red);
+    int playTop = 160;
+    int playHeight = 180;
+    int playWidth = Game::SCREEN_WIDTH;
+    int playLeft = 0;
+    playBtn.setSize(sf::Vector2f(Game::SCREEN_WIDTH, playHeight));
+    playBtn.setOutlineColor(sf::Color::Green);
     playBtn.setOutlineThickness(5);
-    playBtn.setPosition(0, 145);
+    playBtn.setFillColor(sf::Color::Transparent);
+    playBtn.setPosition(0, playTop);
     window.draw(playBtn);
-
-    sf::RectangleShape exitBtn;
-    exitBtn.setSize(sf::Vector2f(Game::SCREEN_WIDTH, 380));
-    exitBtn.setOutlineColor(sf::Color::Blue);
-    exitBtn.setOutlineThickness(5);
-    exitBtn.setPosition(0, 560);
-    window.draw(exitBtn);
-
-    //Setup clickable regions
-    //Play menu item coordinates
     MenuItem playButton;
-    playButton.rect.top = 145;
-    playButton.rect.height = 380;
-    playButton.rect.left = 0;
-    playButton.rect.width = 1023;
+    playButton.rect.top = playTop;
+    playButton.rect.height = playHeight;
+    playButton.rect.left = playLeft;
+    playButton.rect.width = playWidth;
     playButton.action = Play;
 
-    //Exit menu item coordinates
+    sf::RectangleShape exitBtn;
+    int exitTop = 460;
+    int exitHeight = 180;
+    int exitWidth = Game::SCREEN_WIDTH;
+    int exitLeft = 0;
+    exitBtn.setSize(sf::Vector2f(Game::SCREEN_WIDTH, exitHeight));
+    exitBtn.setOutlineColor(sf::Color::Green);
+    exitBtn.setOutlineThickness(5);
+    exitBtn.setFillColor(sf::Color::Transparent);
+    exitBtn.setPosition(0, exitTop);
+    window.draw(exitBtn);    
     MenuItem exitButton;
-    exitButton.rect.left = 0;
-    exitButton.rect.width = 1023;
-    exitButton.rect.top = 383;
-    exitButton.rect.height = 560;
+    exitButton.rect.top = exitTop;
+    exitButton.rect.height = exitHeight;
+    exitButton.rect.left = exitLeft;
+    exitButton.rect.width = exitWidth;
     exitButton.action = Exit;
+
     _menuItems.push_back(playButton);
     _menuItems.push_back(exitButton);
     //window.draw(sprite);
@@ -55,10 +61,14 @@ MainMenu::MenuResult MainMenu::HandleClick(int x, int y)
     for (it = _menuItems.begin(); it != _menuItems.end(); it++)
     {
         sf::Rect<int> menuItemRect = (*it).rect;
-        if (menuItemRect.height > y
-            && menuItemRect.top < y
+       /* std::cout << "item H(>y): " << menuItemRect.height << 
+                    " T(<y): " << menuItemRect.top << 
+                    " L(<x): " << menuItemRect.left << 
+                    " W(>x): " << menuItemRect.width << std::endl;*/
+        if (menuItemRect.height + menuItemRect.top > y
+            && menuItemRect.top < y)/*
             && menuItemRect.left < x
-            && menuItemRect.width > x)
+            && menuItemRect.width > x)*/
         {
             return (*it).action;
         }
@@ -74,6 +84,7 @@ MainMenu::MenuResult  MainMenu::GetMenuResponse(sf::RenderWindow& window)
         {
             if (menuEvent.type == sf::Event::MouseButtonPressed)
             {
+                std::cout << "X: " << menuEvent.mouseButton.x << " Y: " <<  menuEvent.mouseButton.y << std::endl;
                 return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);
             }
             if (menuEvent.type == sf::Event::Closed)

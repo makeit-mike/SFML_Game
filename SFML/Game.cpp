@@ -8,7 +8,7 @@ void Game::Start(void) {
 
 	//Startclock.restart();
 	
-	_mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Beans!", sf::Style::Titlebar | sf::Style::Close);
+	_mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "A Bad Game", sf::Style::Titlebar | sf::Style::Close);
 	_mainWindow.setFramerateLimit(60);
 	_mainWindow.setVerticalSyncEnabled(true);
 
@@ -21,13 +21,13 @@ void Game::Start(void) {
 	//// activate it
 	//_mainWindow.setView(view);
 
-	//Background* background = new Background();
-	//_backgroundManager.Add("firstScreen", background);
+	Background* background = new Background();
+	_backgroundManager.Add("firstScreen", background);
 
 
 	//Dynamically create objects
 	Player* player1 = new Player();
-	player1->SetPosition((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+	player1->SetPosition((SCREEN_WIDTH / 3), (SCREEN_HEIGHT / 3));
 	_gameObjectManager.Add("Player", player1);
 
 	GameBall* ball = new GameBall();
@@ -56,11 +56,13 @@ void Game::Start(void) {
 				ShowMenu();
 				break;
 			case Game::GameState::Playing:
+				//elapsedTime = clock.getElapsedTime().asSeconds();
 				elapsedTime = clock.getElapsedTime().asSeconds();
+				//clock.restart();
 				_mainWindow.clear(sf::Color(10, 10, 10));
 
-				//_backgroundManager.UpdateAll(elapsedTime, _mainWindow);
-				//_backgroundManager.DrawAll(_mainWindow);
+				_backgroundManager.UpdateAll(elapsedTime, _mainWindow);
+				_backgroundManager.DrawAll(_mainWindow);
 
 				_gameObjectManager.UpdateAll(elapsedTime, _mainWindow);
 				_gameObjectManager.DrawAll(_mainWindow);
@@ -123,4 +125,4 @@ void Game::ShowMenu()
 Game::GameState Game::_gameState = GameState::Uninitialized;
 sf::RenderWindow Game::_mainWindow;
 GameObjectManager Game::_gameObjectManager;
-//BackgroundManager Game::_backgroundManager;
+BackgroundManager Game::_backgroundManager;

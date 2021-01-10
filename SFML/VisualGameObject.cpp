@@ -16,7 +16,7 @@ void VisibleGameObject::Load(sf::Texture& texture, std::string filename) {
 	_filename = filename;
 	texture.loadFromImage(_image);
 	_sprite.setTexture(texture);
-	_sprite.scale(2, 2);
+	_sprite.scale(6, 6);
 	_isLoaded = true;
 }
 void VisibleGameObject::Draw(sf::RenderWindow& renderWindow)

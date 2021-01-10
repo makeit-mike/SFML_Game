@@ -52,17 +52,22 @@ void Player::Update(float elapsedTime, sf::RenderWindow& rw) {
 }
 void Player::CheckWindowCollisions(sf::RenderWindow& rw) {
     sf::FloatRect playerDimensions = GetSprite().getGlobalBounds();
+    //std::cout << " Left: " << playerDimensions.left <<
+    //            " Right: " << playerDimensions.left + playerDimensions.width <<
+    //            " Top: " << playerDimensions.top <<
+    //            " Bottom: " << playerDimensions.top + playerDimensions.height << std::endl;
+
     if (playerDimensions.left <= 0.0f) { //left bound
-        SetPosition(0, GetPosition().y);
+        SetPosition(18, GetPosition().y);
     }
-    else if (playerDimensions.left - playerDimensions.width >= rw.getSize().x) { //right bound
+    else if (playerDimensions.left + playerDimensions.width>= rw.getSize().x) { //right bound
         SetPosition(rw.getSize().x - playerDimensions.width, GetPosition().y);
     }
 
     if (playerDimensions.top <= 0.0f) { //top bound 
-        SetPosition(GetPosition().x, 0);
+        SetPosition(GetPosition().x, 18);
     }
-    else if (playerDimensions.top - playerDimensions.height >= rw.getSize().y) { //bottom bound
-        SetPosition(GetPosition().x, rw.getSize().y - playerDimensions.height - 10);
+    else if (playerDimensions.top + playerDimensions.height >= rw.getSize().y) { //bottom bound
+        SetPosition(GetPosition().x, rw.getSize().y - playerDimensions.height);
     }
 }

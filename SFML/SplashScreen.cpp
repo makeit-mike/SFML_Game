@@ -3,7 +3,7 @@
 
 void SplashScreen::show(sf::RenderWindow & renderWindow) {
 	sf::Image image;
-	image.loadFromFile("images\\Winter.png");
+	image.loadFromFile("images\\SplashScreen.png");
 	
 	sf::Texture texture;
 	texture.loadFromImage(image);
@@ -22,5 +22,4 @@ void SplashScreen::show(sf::RenderWindow & renderWindow) {
 				|| event.type == sf::Event::EventType::Closed) return;
 		}
 	}
-
 }
